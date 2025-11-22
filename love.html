@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Love Forever</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #2d1b3d 0%, #1a0a2e 30%, #3d2645 60%, #2a1438 100%);
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Georgia', serif;
+      cursor: pointer;
+    }
+
+    #ui {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .love {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -225px 0 0 -225px;
+      pointer-events: none;
+      --i: 1;
+    }
+
+    .love_word {
+      font-size: 1.2rem;
+      text-shadow: 0 0 20px currentColor, 0 0 40px currentColor;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      font-weight: 500;
+    }
+
+    .love_horizontal {
+      animation: horizontal 10000ms infinite alternate ease-in-out;
+      animation-delay: calc(var(--i) * -300ms);
+    }
+
+    .love_vertical {
+      animation: vertical 20000ms infinite linear;
+      animation-delay: calc(var(--i) * -300ms);
+    }
+
+    .love_rotate {
+      animation: rotate 20000ms infinite linear;
+      animation-delay: calc(var(--i) * -400ms);
+    }
+
+    .love_fade {
+      animation: fade 8000ms infinite ease-in-out;
+      animation-delay: calc(var(--i) * -400ms);
+    }
+
+    .love_pulse {
+      animation: pulse 4000ms infinite ease-in-out;
+      animation-delay: calc(var(--i) * -200ms);
+    }
+
+    /* Color variants */
+    .color-1 { color: #ff6b9d; }
+    .color-2 { color: #ff8fab; }
+    .color-3 { color: #ffa8c5; }
+    .color-4 { color: #ff5e8a; }
+    .color-5 { color: #ff4d7d; }
+    .color-6 { color: #ffb3d9; }
+
+    .heart {
+      font-size: 1.8rem;
+      filter: drop-shadow(0 0 15px currentColor);
+    }
+
+    @keyframes horizontal {
+      from { transform: translateX(0px); }
+      to   { transform: translateX(450px); }
+    }
+
+    @keyframes vertical {
+      0%   { transform: translateY(180px); }
+      10%  { transform: translateY(45px); }
+      15%  { transform: translateY(4.5px); }
+      18%  { transform: translateY(0px); }
+      20%  { transform: translateY(4.5px); }
+      22%  { transform: translateY(34.61538px); }
+      24%  { transform: translateY(64.28571px); }
+      25%  { transform: translateY(112.5px); }
+      26%  { transform: translateY(64.28571px); }
+      28%  { transform: translateY(34.61538px); }
+      30%  { transform: translateY(4.5px); }
+      32%  { transform: translateY(0px); }
+      35%  { transform: translateY(4.5px); }
+      40%  { transform: translateY(45px); }
+      50%  { transform: translateY(180px); }
+      71%  { transform: translateY(428.57143px); }
+      72.5%{ transform: translateY(441.17647px); }
+      75%  { transform: translateY(450px); }
+      77.5%{ transform: translateY(441.17647px); }
+      79%  { transform: translateY(428.57143px); }
+      100% { transform: translateY(180px); }
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fade {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1) rotate(180deg); }
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      animation: sparkle 3000ms infinite ease-in-out;
+      box-shadow: 0 0 10px #fff, 0 0 20px #ff8fab;
+    }
+
+    .click-heart {
+      position: absolute;
+      font-size: 2rem;
+      pointer-events: none;
+      animation: floatUp 2s ease-out forwards;
+      color: #ff6b9d;
+      text-shadow: 0 0 20px currentColor;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-200px) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .shooting-star {
+      position: absolute;
+      width: 200px;
+      height: 4px;
+      background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 20%,
+        rgba(255, 255, 255, 1) 95%,
+        rgba(255, 255, 255, 1) 100%);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 1),
+                  0 0 40px rgba(255, 255, 255, 0.8);
+      z-index: 1000;
+    }
+
+    .shooting-star::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 15px solid white;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 1));
+    }
+
+    .star-trail {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: trailFade 1s ease-out forwards;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 1),
+                  0 0 20px rgba(255, 200, 255, 0.8);
+      z-index: 999;
+    }
+
+    @keyframes trailFade {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0.2);
+      }
+    }
+
+    @keyframes shootingStar {
+      0% {
+        transform: translate(0, 0) rotate(-45deg);
+        opacity: 0;
+      }
+      5% {
+        opacity: 1;
+      }
+      95% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(140vw, -140vh) rotate(-45deg);
+        opacity: 0;
+      }
+    }
+
+
+  </style>
+</head>
+<body>
+<div id="ui"></div>
+
+  <script>
+    const messages = ['I love you', '❤️', 'Forever', 'My love', '💕', 'Always'];
+    const ui = document.getElementById('ui');
+    const colors = ['color-1', 'color-2', 'color-3', 'color-4', 'color-5', 'color-6'];
+
+    function createLoveElement(i, x = null, y = null) {
+      const love = document.createElement('div');
+      love.className = 'love';
+      love.style.setProperty('--i', i);
+      
+      if (x !== null && y !== null) {
+        love.style.left = x + 'px';
+        love.style.top = y + 'px';
+        love.style.transform = 'translate(-50%, -50%)';
+      }
+
+      const h = document.createElement('div');
+      h.className = 'love_horizontal';
+
+      const v = document.createElement('div');
+      v.className = 'love_vertical';
+
+      const r = document.createElement('div');
+      r.className = 'love_rotate';
+
+      const f = document.createElement('div');
+      f.className = 'love_fade';
+
+      const p = document.createElement('div');
+      p.className = 'love_pulse';
+
+      const word = document.createElement('div');
+      word.className = 'love_word ' + colors[Math.floor(Math.random() * colors.length)];
+      
+      const isHeart = Math.random() > 0.6;
+      if (isHeart) {
+        word.classList.add('heart');
+        word.textContent = Math.random() > 0.5 ? '❤️' : '💕';
+      } else {
+        const msg = messages[Math.floor(Math.random() * messages.length)];
+        word.textContent = msg;
+      }
+
+      // Add sparkles randomly
+      if (Math.random() > 0.7) {
+        for (let s = 0; s < 3; s++) {
+          const sparkle = document.createElement('div');
+          sparkle.className = 'sparkle';
+          sparkle.style.left = (Math.random() * 100 - 50) + 'px';
+          sparkle.style.top = (Math.random() * 100 - 50) + 'px';
+          sparkle.style.animationDelay = (Math.random() * 3000) + 'ms';
+          word.appendChild(sparkle);
+        }
+      }
+
+      p.appendChild(word);
+      f.appendChild(p);
+      r.appendChild(f);
+      v.appendChild(r);
+      h.appendChild(v);
+      love.appendChild(h);
+      ui.appendChild(love);
+
+      return love;
+    }
+
+    // Create initial floating elements
+    for (let i = 1; i <= 60; i++) {
+      createLoveElement(i);
+    }
+
+    // Click to create hearts
+    document.body.addEventListener('click', (e) => {
+      const heart = document.createElement('div');
+      heart.className = 'click-heart';
+      heart.textContent = Math.random() > 0.5 ? '❤️' : '💕';
+      heart.style.left = e.clientX + 'px';
+      heart.style.top = e.clientY + 'px';
+      heart.style.transform = 'translate(-50%, -50%)';
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 2000);
+
+      // Create a few small floating elements at click position
+      if (Math.random() > 0.7) {
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            const mini = createLoveElement(Math.random() * 100, e.clientX, e.clientY);
+            setTimeout(() => mini.remove(), 15000);
+          }, i * 100);
+        }
+      }
+    });
+
+    // Create shooting star at random intervals
+    function createShootingStar() {
+      const star = document.createElement('div');
+      star.className = 'shooting-star';
+      
+      // Start from bottom-left corner
+      const startX = -100;
+      const startY = window.innerHeight + 100;
+      
+      star.style.left = startX + 'px';
+      star.style.top = startY + 'px';
+      star.style.animation = 'shootingStar 2s ease-in forwards';
+      
+      document.body.appendChild(star);
+
+      // Create sparkling trail
+      let trailCount = 0;
+      const trailInterval = setInterval(() => {
+        if (trailCount > 35) {
+          clearInterval(trailInterval);
+          return;
+        }
+        
+        const trail = document.createElement('div');
+        trail.className = 'star-trail';
+        const rect = star.getBoundingClientRect();
+        // Place trail at the center of the arrow
+        trail.style.left = (rect.left + rect.width / 2) + 'px';
+        trail.style.top = (rect.top + rect.height / 2) + 'px';
+        document.body.appendChild(trail);
+        
+        setTimeout(() => trail.remove(), 1000);
+        trailCount++;
+      }, 40);
+
+      setTimeout(() => {
+        star.remove();
+        clearInterval(trailInterval);
+      }, 2000);
+    }
+
+    // Trigger shooting stars at random intervals (every 8-15 seconds)
+    function scheduleNextStar() {
+      const delay = Math.random() * 7000 + 8000; // 8-15 seconds
+      setTimeout(() => {
+        createShootingStar();
+        scheduleNextStar();
+      }, delay);
+    }
+
+    // Start the shooting star cycle
+    setTimeout(() => {
+      createShootingStar();
+      scheduleNextStar();
+    }, 3000); // First star appears after 3 seconds
+  </script>
+</body>
+</html>
